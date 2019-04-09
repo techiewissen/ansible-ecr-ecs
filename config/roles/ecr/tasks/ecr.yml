@@ -1,7 +1,7 @@
 ---
 - name: build docker image
   docker_image:
-    path: /Users/kiranchanda/Documents/Projects/crude_deal/crude_deal_08032019/app-crudedealsdb/crudedeal-service/
+    path: /Users/*****/Documents/Projects/crude_deal/test_deal_08032019/app-crudedealsdb/crudedeal-service/
     name: "{{ image_name }}"
     tag: "{{ image_version }}"
 
