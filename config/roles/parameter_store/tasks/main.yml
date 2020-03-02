@@ -1,0 +1,23 @@
+---
+# tasks file for parameter_store
+- name: Create or update key/value pair in aws parameter store
+  aws_ssm_parameter_store:
+    name: "{{ item.key  }}"
+    description: "{{ item.description }}"
+    value: "{{ item.value }}"
+    state: present
+  with_items:
+    - { key: testuser1, value: value5, description: descrip1 }
+    - { key: testuser2, value: value2, description: descrip2}
+    - { key: testuser3, value: value3, description: descrip3 }
+# - name: Always update a parameter store value and create a new version
+#   aws_ssm_parameter_store:
+#     name: "overwrite_example"
+#     description: "This example will always overwrite the value"
+#     string_type: "String"
+#     value: "Test1234"
+#     overwrite_value: "always"
+# - name: Delete the key
+#   aws_ssm_parameter_store:
+#     name: "Hello"
+#     state: absent
