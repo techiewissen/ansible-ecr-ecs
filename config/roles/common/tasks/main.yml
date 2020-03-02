@@ -1,0 +1,19 @@
+---
+# tasks file for common
+- name: install docker-py for build docker
+  pip:
+    name: boto3
+    state: present
+    executable: pip3
+
+# - name: install git
+#   pip: 
+#     name: git
+#     state: present
+
+# - name: checkout from repository
+#   git:
+#     repo: 'https://******.git'
+#     dest: /Users/username/Projects/ecspush_ansible/ansible-push2ecr/
+      
+- include: aws.yml
