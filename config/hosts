@@ -4,8 +4,13 @@ localhost ansible_connection=local ansible_host=127.0.0.1 ansible_python_interpr
 
 [local:vars]
 region=us-east-1
-key_id=AKIAIWZHPU64XO6DNGCQ
-access_key=b2e92vNPLplCWL5+G72wdZgUk2InT8lrIj3IuaS+
-image_name=crudedeal
+key_id=AKIAI******
+access_key=b2e92vNPLpl******
+image_name=testappimage
 image_version=latest
+repo=testing
+ecr_registry=accountnumber.dkr.ecr.us-east-1.amazonaws.com
+aws_fargate_deploy_aws_region=us-east-1
+aws_fargate_deploy_cluster_name=test-cluster
+aws_fargate_deploy_service_name=test-service
 
