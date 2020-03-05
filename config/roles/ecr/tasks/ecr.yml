@@ -1,34 +1,36 @@
 ---
-
+---
 - name: Build Maven app backend.
-  command: /usr/local/bin/mvn clean package chdir=/Users/****/Projects/ecspush_ansible/ansible-push2ecr/app1-backend-service/
+  command: /usr/local/bin/mvn clean package chdir=/Users/kiranchanda/Projects/ecspush_ansible/ansible-push2ecr/crudedeal-service/
 
-- name: build docker image
+- name: Build docker image from dockerfile.
   docker_image:
-    path: /Users/*****/Documents/Projects/crude_deal/test_deal_08032019/****/**-service/
-    name: "{{ image_name }}"
-    tag: "{{ image_version }}"
+    name: "{{ item.name }}"
+    tag: "{{ git_code_version.after }}"
+    source: build
+    build:
+      path: "{{item.directory}}"
+      pull: true
+    state: present
+  with_items:
+    - { name: crudedeal-service-api, tag: latest, directory: "/Users/kiranchanda/Projects/ecspush_ansible/ansible-push2ecr/crudedeal-service/" }
+    # - { name: web, tag: latest, directory:   }
 
-- name: docker login (must `--no-include-email`)
+- name: Tag image with AWS ECR registry, repo and image tag name.
+  docker_image:
+    name: "{{ image_name }}:{{ git_code_version.after }}"
+    repository: "{{ ecr_registry }}/{{ repo }}"
+    tag: "{{ git_code_version.after }}"
+
+- name: docker ecr login (must `--no-include-email`)
   shell: "$(aws ecr get-login --region {{ region }} --no-include-email)"
   args:
       executable: /bin/bash
 
-- name: create repository
-  ecs_ecr:
-    name: "{{ image_name }}"
-    aws_access_key: "{{ key_id }}"
-    aws_secret_key: "{{ access_key }}"
-    region: "{{ region }}"
-  register: ecr_repo
-
-- name: add tag
+- name: push image to ecr.
   docker_image:
-    name: "{{ image_name }}:{{ image_version }}"
-    repository: "{{ ecr_repo.repository.repositoryUri }}"
-    tag: "{{ ecr_repo.repository.repositoryUri }}:{{ image_version }}"
-
-- name: push image to ecr
-  docker_image:
-    name: "{{ ecr_repo.repository.repositoryUri }}:{{ image_version }}"
+    name: "{{ ecr_registry }}/{{ repo }}:{{ git_code_version.after }}"
     push: yes
+
+- debug: msg="SHA-1 before git update is {{ git_code_version.before }}"
+- debug: msg="SHA-1 after git update is {{ git_code_version.after }}"
