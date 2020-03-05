@@ -1,7 +1,11 @@
 ---
+
+- name: Build Maven app backend.
+  command: /usr/local/bin/mvn clean package chdir=/Users/****/Projects/ecspush_ansible/ansible-push2ecr/app1-backend-service/
+
 - name: build docker image
   docker_image:
-    path: /Users/*****/Documents/Projects/crude_deal/test_deal_08032019/app-crudedealsdb/crudedeal-service/
+    path: /Users/*****/Documents/Projects/crude_deal/test_deal_08032019/****/**-service/
     name: "{{ image_name }}"
     tag: "{{ image_version }}"
 
