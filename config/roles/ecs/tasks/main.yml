@@ -1,2 +1,18 @@
 ---
 # tasks file for ecs
+
+- name: register task definition
+  command:
+    aws ecs register-task-definition
+      --cli-input-json  {{ item.taskdef }}
+  with_items:
+    - { taskdef: "file:///Users/**/Projects/ecspush_ansible/web-task-definition.json" }
+
+- name: Deploy Service
+  command:
+    aws ecs update-service
+    --region {{ aws_fargate_deploy_aws_region }}
+    --cluster {{ aws_fargate_deploy_cluster_name }}
+    --service {{ aws_fargate_deploy_service_name }}
+    --task-definition web
+    --desired-count 2
