@@ -13,7 +13,7 @@
       pull: true
     state: present
   with_items:
-    - { name: crudedeal-service-api, tag: latest, directory: "/Users/kiranchanda/Projects/ecspush_ansible/ansible-push2ecr/crudedeal-service/" }
+    - { name: *****-service-api, tag: latest, directory: "/Users/****/Projects/ecspush_ansible/ansible-push2ecr/****-service/" }
     # - { name: web, tag: latest, directory:   }
 
 - name: Tag image with AWS ECR registry, repo and image tag name.
