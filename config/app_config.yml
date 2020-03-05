@@ -2,9 +2,10 @@
 - name: apply the common configuration to all hosts
   hosts: all
 
+  vars_files:
+    - "env_config/app1/app1_us_dev/vars/main.yml"
   roles:
-  - common
-#  - ecr
+  # - common
+  # - ecr
   - parameter_store
-  
-
+  # - ecs
